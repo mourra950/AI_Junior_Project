@@ -95,7 +95,7 @@ class Ui_MainWindow(object):
         self.pushButton.clicked.connect(lambda :self.addNode())
         self.pushButton_3.setText(_translate("MainWindow", "Insert Edge"))
         self.pushButton_2.setText(_translate("MainWindow", "Draw Graph"))
-        self.pushButton_2.clicked.connect(lambda:self.drawGraph())
+        
         self.comboBox.setItemText(0, _translate("MainWindow", "BFS"))
         self.comboBox.setItemText(1, _translate("MainWindow", "DFS"))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt;\">Select Algorithm</span></p></body></html>"))
