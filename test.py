@@ -16,7 +16,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox
 from pyvis.network import Network
 from PyQt5 import QtWebEngineWidgets
-net=Network()
+net=Network(height='100%',width='100%')
 
 class Ui_MainWindow(object):
     def drawGraph(self):
