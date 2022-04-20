@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import networkx as nx
-from sympy import root
 from tkinter import*
 from tkinter import Button
 import tkinter as tk
