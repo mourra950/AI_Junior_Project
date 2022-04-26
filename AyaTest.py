@@ -23,14 +23,16 @@ nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'weight'
 #plt.figure(2)
 #nx.draw(G2,node_color="red")
 
-plt.show() 
+#plt.show() 
 
 def path_cost(path):
     total_cost=0
     for(node,cost) in path:
         total_cost+=cost
-        return total_cost,path[-1][0]
-
+    return total_cost,path[-1][0]
+#Trying PathCost function
+#path=[('S',0),('D',5),('G',5)]
+#print(path_cost(path))
     
 def ucs(graph,s,g):
     visited=[]
@@ -51,6 +53,18 @@ def ucs(graph,s,g):
                 new_path.append((node2,cost))
                 queue.append(new_path)
         
+
         
-    
-    
+#Testing the ucs function    
+graph={
+'S':[('A',2),('B',3),('D',5)],
+'A':[('C',4)],
+'B':[('D',4)],
+'C':[('D',1),('G',2)],
+'D':[('G',5)],
+'G':[],
+    }   
+
+solution=ucs(graph,'C','G')
+print("Solution is ", solution)
+print("Path Cost is ", path_cost(solution)[0])
