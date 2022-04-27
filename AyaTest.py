@@ -61,6 +61,7 @@ def ayhaga():
 
         
         
+                
 #Testing the ucs function    
 graph={
 'S':[('A',2),('B',3),('D',5)],
@@ -71,15 +72,15 @@ graph={
 'G':[],
     }   
 
-solution=ucs(graph,'A','G')
+solution=ucs(graph,'A','C')
 print("Solution is ", solution)
 print("Path Cost is ", path_cost(solution)[0])
 ayhaga()
 nodes=[("S","A"),("S","B"),("S","D"),("A","C"),("B","D"),("C","D"),("C","G"),("D","G")]
 graph=nx.Graph()
 graph.add_edges_from(nodes)
-#graph=nx.Graph()
 nx.draw(graph,with_labels=True,font_size=10,font_color="#2A659A",bbox=dict(facecolor="#24517A"))
-#nx.draw_networkx_edge_labels(graph,edge_labels=nx.get_edge_attributes(graph,'weight'))
+pos=nx.spring_layout(graph)
+nx.draw_networkx_edge_labels(graph,pos,edge_labels=nx.get_edge_attributes(graph,'weight'))
 
 plt.show()
