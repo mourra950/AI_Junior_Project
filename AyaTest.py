@@ -34,7 +34,7 @@ def path_cost(path):
 #path=[('S',0),('D',5),('G',5)]
 #print(path_cost(path))
     
-def ucs(graph,s,g):#return list of nodes 
+def ucs(graph,s,g):#return list of nodes
     #visited=[]
     queue=[[(s,0)]]
     while queue:
@@ -42,7 +42,7 @@ def ucs(graph,s,g):#return list of nodes
         path=queue.pop(0)
         node=path[-1][0]
         print("ana hena")
-        #print(node)
+        print(node)
         if node in visited:
             continue
         visited.append(node)
@@ -86,6 +86,3 @@ pos=nx.spring_layout(graph)
 nx.draw_networkx_edge_labels(graph,pos,edge_labels=nx.get_edge_attributes(graph,'weight'))
 
 plt.show()
-#goal is a list 
-#return visited nodes , path
-#path cost
