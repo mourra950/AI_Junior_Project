@@ -124,7 +124,7 @@ border:0;</string>
               <widget class="QLineEdit" name="InsertedNode"/>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton">
+              <widget class="QRadioButton" name="IsGoalState">
                <property name="text">
                 <string>Goal State</string>
                </property>
@@ -241,7 +241,7 @@ border:0;</string>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit">
+              <widget class="QLineEdit" name="StartNode">
                <property name="text">
                 <string/>
                </property>
@@ -251,14 +251,14 @@ border:0;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="StartAlgo">
             <property name="text">
              <string>Start</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="Reset">
             <property name="text">
              <string>reset</string>
             </property>
@@ -278,6 +278,11 @@ border:0;</string>
         <height>0</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">border-color: rgb(0, 255, 0);
+border: 4px;
+background-color: rgb(170, 255, 0);</string>
+      </property>
      </widget>
     </item>
    </layout>
@@ -288,7 +293,7 @@ border:0;</string>
      <x>0</x>
      <y>0</y>
      <width>1120</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -92,7 +92,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "Insert Node"))
-        self.pushButton.clicked.connect(lambda :self.addNode())
+        self.pushButton.clicked.connect(lambda :self.drawGraph())
         self.pushButton_3.setText(_translate("MainWindow", "Insert Edge"))
         self.pushButton_2.setText(_translate("MainWindow", "Draw Graph"))
         
