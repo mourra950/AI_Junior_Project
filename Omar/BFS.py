@@ -33,11 +33,12 @@ def bfs_iterate_till_goal(MGraph,start,Goal):#we need to make goal list
     T = nx.bfs_tree(G, source=start)
     print('here')
     for i in T:
-        
         visited.append(i)
         if(i==Goal):
-            break
-    print('here')
+            return visited
+        
+        
+#/////////////////////////////////////////////////////////////////////////////////////
 #networkx function that return a list sorted by visited edges    
     EdgeIterator=nx.dfs_edges(MGraph,source=start)
 #turn the edge to list
