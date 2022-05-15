@@ -26,12 +26,9 @@ edgesVisited=[]
 
 #function when called return list with visited edges and visited nodes when bfs is used
 def bfs_iterate_till_goal(MGraph,start,Goal):#we need to make goal list
-#add the start node immediatly
-    visited.append(start)
 #networkx function that return a list sorted by visited nodes
     NodesIterator=nx.bfs_successors(MGraph, source=start)
-    T = nx.bfs_tree(G, source=start)
-    print('here')
+    T = nx.bfs_tree(MGraph, source=start)
     for i in T:
         visited.append(i)
         if(i==Goal):
