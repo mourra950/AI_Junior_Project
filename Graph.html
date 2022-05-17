@@ -1,7 +1,7 @@
 <html>
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
 <center>
 <h1></h1>
 </center>
@@ -50,8 +50,8 @@
         
 
         // parsing and collecting nodes and edges from the python
-        nodes = new vis.DataSet([{"id": "x", "label": "x", "shape": "dot"}, {"id": "y", "label": "y", "shape": "dot"}, {"id": "b", "label": "b", "shape": "dot"}, {"id": "t", "label": "t", "shape": "dot"}, {"id": "a", "label": "a", "shape": "dot"}]);
-        edges = new vis.DataSet([]);
+        nodes = new vis.DataSet([{"color": "#643A71", "id": "a", "label": "a", "shape": "dot"}, {"color": "#643A71", "id": "b", "label": "b", "shape": "dot"}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "#Fcc201", "from": "a", "to": "b"}]);
 
         // adding nodes and edges to the graph
         data = {nodes: nodes, edges: edges};
@@ -65,8 +65,8 @@
             "inherit": true
         },
         "smooth": {
-            "enabled": true,
-            "type": "dynamic"
+            "enabled": false,
+            "type": "continuous"
         }
     },
     "interaction": {
