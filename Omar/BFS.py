@@ -35,25 +35,25 @@ def bfs_iterate_till_goal(MGraph,start,Goal):#we need to make goal list
             return visited
         
         
-#/////////////////////////////////////////////////////////////////////////////////////
-#networkx function that return a list sorted by visited edges    
-    EdgeIterator=nx.dfs_edges(MGraph,source=start)
-#turn the edge to list
-    Edgelist=list(EdgeIterator)
-#create a list of visited edges until goal
-    for i in Edgelist:
+# #/////////////////////////////////////////////////////////////////////////////////////
+# #networkx function that return a list sorted by visited edges    
+#     EdgeIterator=nx.dfs_edges(MGraph,source=start)
+# #turn the edge to list
+#     Edgelist=list(EdgeIterator)
+# #create a list of visited edges until goal
+#     for i in Edgelist:
         
-        edgesVisited.append(i)
-        if(i[1]==Goal):
-            break
-#create list of visited nodes until goal
-    for succesors in NodesIterator:
-        for childnodes in succesors[1]:
-            visited.append(childnodes)
-            if(childnodes==Goal):
-                return visited,edgesVisited 
-#return the 2 lists
-    return visited,edgesVisited 
+#         edgesVisited.append(i)
+#         if(i[1]==Goal):
+#             break
+# #create list of visited nodes until goal
+#     for succesors in NodesIterator:
+#         for childnodes in succesors[1]:
+#             visited.append(childnodes)
+#             if(childnodes==Goal):
+#                 return visited,edgesVisited 
+# #return the 2 lists
+#     return visited,edgesVisited 
            
             
             

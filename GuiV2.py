@@ -25,7 +25,59 @@ counter = 0
 
 
 class Ui_MainWindow(object):
+    def showPath(self,visited,counter):
+        N = Network(height='100%', width='100%', directed=True)
+        count=0
+        for i in visited:
+            if counter>count:
+                N.add_node(i, color='#643A71')
+                count += 1
+            else:
+                N.add_node(i)
 
+        for i in nx.nodes(G):
+            if i  not in visited :
+                N.add_node(i)
+        for i in nx.nodes(G):
+            for j in nx.neighbors(G, i):
+                N.add_edge(i, j,color='#Fcc201')
+        N.write_html('Graph.html')
+        self.web.load(QUrl.fromLocalFile(os.path.abspath(os.path.join(os.path.dirname(__file__), "Graph.html"))))
+
+    def loadGraph(self):
+        global counter
+        if self.getAlgoSelection()=="Greedy":
+            # visited = greedy(G, 's', ['g'])
+            print(visited)
+
+            self.showPath(visited, counter)
+            counter += 1
+            visited.clear()
+        elif self.getAlgoSelection()=="BFS":
+            visited=bfs.bfs_iterate_till_goal(G,self.getS(),self.getGs())
+            # print(visited)
+
+            self.showPath(visited, counter)
+            counter += 1
+            visited.clear()
+        elif self.getAlgoSelection()=="Uniformed Cost":
+            visited = Ucs.ucs(G,'s','g')
+            print(visited)
+
+            self.showPath(visited, counter)
+            counter += 1
+            visited.clear()
+
+    def getS(self):
+        if(self.StartNode.text()!=''):
+            if(self.StartNode.text() in nx.nodes(G)):
+                return self.StartNode.text()
+            else:
+                self.errorbox('error','start is not found') 
+        else:
+            self.errorbox('error','cant be empty')
+    def getGs(self):
+        return self.Goals.text()
     def errorbox(self,Title,Text):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
@@ -35,7 +87,7 @@ class Ui_MainWindow(object):
     # custom funtions
     def GraphType(self):
         global G
-        print('test directed')
+
         
         if(self.Directed.isChecked()):
             G=nx.DiGraph()
