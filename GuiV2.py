@@ -416,6 +416,7 @@ class Ui_MainWindow(object):
         # self.Directed.clicked.connect(lambda: self.GraphType())
         self.ResetGraph.setText(_translate("MainWindow", "reset"))
         self.NextButton.setText(_translate("MainWindow", "Next"))
+        self.NextButton.clicked.connect(lambda: self.loadGraph())
         self.pathShow.setText(_translate("MainWindow", "show path"))
 
 
