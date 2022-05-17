@@ -19,10 +19,44 @@ from pyvis.network import Network
 from PyQt5 import QtWebEngineWidgets
 import networkx as nx
 import Omar.BFS as bfs
+#import Greedy as gr
 G = nx.DiGraph()
 
 counter = 0
+def getPath(g,node):
+    path=[]
+    #cost=0
+    path.append(node)
+    while not(g.nodes[node]['parent'] is None):
+        path.append(g.nodes[node]['parent'])
+        #cost += nx.get_edge_attributes(g, 'weight')[(g.nodes[node]['parent'],node)]
+        node=g.nodes[node]['parent']
+    path.reverse()
+    return path
+def getH(node):
+    return G.nodes[node]['h']
+def greedy(g,start,goal):
+    fringe=[]
+    visited=[]
+    if not(start in g.nodes):
+        print("not in the graph")
+        return
+    else:
+        fringe.append(start)
+        x=fringe[0]
+        while not(len(fringe)==0):
+            x=fringe[0]
+            visited.append(x)
+            fringe.pop(0)
+            if x == goal:
+                print("Goal is "+ str(x),sep=" ")
+                return visited
+            for y in nx.all_neighbors(g,x):
+                if not(y in visited):
+                    fringe.append(y)
+                    nx.set_node_attributes(g, {y: x}, name="parent")
 
+            fringe.sort(key=getH)
 
 class Ui_MainWindow(object):
     def showPath(self,visited,counter):
@@ -47,8 +81,7 @@ class Ui_MainWindow(object):
     def loadGraph(self):
         global counter
         if self.getAlgoSelection()=="Greedy":
-            # visited = greedy(G, 's', ['g'])
-            print(visited)
+            visited = greedy(G,self.getS(),self.getGs())
 
             self.showPath(visited, counter)
             counter += 1

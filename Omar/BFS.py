@@ -9,7 +9,7 @@ import networkx as nx
 # G.add_node('s')
 # G.add_node('g')
 # G.add_node('gs')
-
+#
 # #creating edges
 # G.add_edge('s', 'gs', weight=12)
 # G.add_edge('gs', 'g', weight=12)
@@ -58,6 +58,6 @@ def bfs_iterate_till_goal(MGraph,start,Goal):#we need to make goal list
             
             
 #test drive            
-# def main():            
+# def main():
 #     bfs_iterate_till_goal(G,'s','g')
 # main()
