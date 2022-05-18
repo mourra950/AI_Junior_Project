@@ -20,6 +20,7 @@ from pyvis.network import Network
 from PyQt5 import QtWebEngineWidgets
 import networkx as nx
 import Omar.BFS as bfs
+import Omar.DFS as dfs
 
 # import Greedy as gr
 G = nx.DiGraph()
@@ -33,7 +34,8 @@ def getPath(node):
     path.append(node)
     while not (G.nodes[node]['parent'] is None):
         path.append(G.nodes[node]['parent'])
-        cost += nx.get_edge_attributes(G, 'weight')[(G.nodes[node]['parent'], node)]
+        cost += nx.get_edge_attributes(G,
+                                       'weight')[(G.nodes[node]['parent'], node)]
         node = G.nodes[node]['parent']
     path.reverse()
     return path, cost
@@ -83,8 +85,11 @@ class Ui_MainWindow(object):
             self.showPathcost.setText(temp)
             self.showPath(path, len(path), '#FF0000')
         elif self.getAlgoSelection() == "DFS":
-            var = 0  # DELETE THIS LINE
-            # Add DFS call
+            path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
+            temp = ''.join(path)
+            temp += ' and the cost is: ' + str(cost)
+            self.showPathcost.setText(temp)
+            self.showPath(path, len(path), '#FF0000')
         elif self.getAlgoSelection() == "Uniform Cost":
             var = 0  # DELETE THIS LINE
             # Add UCS call
@@ -97,6 +102,7 @@ class Ui_MainWindow(object):
         counter = 1
         self.draw()
         self.showPathcost.clear()
+        self.errorbox('Reset done', 'hope you keep enjoying the program😉')
 
     def showPath(self, visited, counter, Mcolor):
         N = Network(height='100%', width='100%', directed=True)
@@ -107,7 +113,6 @@ class Ui_MainWindow(object):
                 count += 1
             else:
                 N.add_node(i)
-
         for i in nx.nodes(G):
             if i not in visited:
                 N.add_node(i)
@@ -115,27 +120,29 @@ class Ui_MainWindow(object):
             for j in nx.neighbors(G, i):
                 N.add_edge(i, j, color='#Fcc201')
         N.write_html('Graph.html')
-        self.web.load(QUrl.fromLocalFile(os.path.abspath(os.path.join(os.path.dirname(__file__), "Graph.html"))))
+        self.web.load(QUrl.fromLocalFile(os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "Graph.html"))))
 
     def loadGraph(self):
         global counter
         if self.getAlgoSelection() == "Greedy":
             visited, path = greedy(G, self.getS(), self.getGs())
-
             self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "BFS":
             visited = bfs.bfs_iterate_till_goal(G, self.getS(), self.getGs())
-            # print(visited)
-
+            self.showPath(visited, counter, "#FFFF00")
+            counter += 1
+            visited.clear()
+        elif self.getAlgoSelection() == "DFS":
+            visited = dfs.dfs_iterate_till_goal(G, self.getS(), self.getGs())
             self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "Uniform Cost":
             visited = Ucs.ucs(G, 's', 'g')
             print(visited)
-
             self.showPath(visited, counter)
             counter += 1
             visited.clear()
@@ -192,7 +199,8 @@ class Ui_MainWindow(object):
         else:
             if (self.getHe().isdigit()):
 
-                G.add_node(self.getNodeName(), h=int(self.getHe()), parent=None)
+                G.add_node(self.getNodeName(), h=int(
+                    self.getHe()), parent=None)
                 print(G.nodes)
                 self.draw()
                 self.HeuristicNode.clear()
@@ -206,7 +214,8 @@ class Ui_MainWindow(object):
             self.errorbox('error', 'Enter Valid Nodes')
         else:
             if (self.getWe().isdigit()):
-                G.add_edge(self.getFromNode(), self.getToNode(), weight=int(self.getWe()))
+                G.add_edge(self.getFromNode(), self.getToNode(),
+                           weight=int(self.getWe()))
                 self.ToNode.clear()
                 self.FromNode.clear()
                 self.draw()
@@ -225,10 +234,8 @@ class Ui_MainWindow(object):
 
     def draw(self):
         # if(self.Directed.isChecked()):
-        #     print("mama")
         N = Network(height='100%', width='100%', directed=True)
         # else:
-        #     print("7elwa")
         #     N = Network(height='100%', width='100%',directed=True)
         for i in nx.nodes(G):
             N.add_node(i)
@@ -236,7 +243,8 @@ class Ui_MainWindow(object):
             for j in nx.neighbors(G, i):
                 N.add_edge(i, j, color='#Fcc201', title=G[i][j]['weight'])
         N.write_html('Graph.html')
-        self.web.load(QUrl.fromLocalFile(os.path.abspath(os.path.join(os.path.dirname(__file__), "Graph.html"))))
+        self.web.load(QUrl.fromLocalFile(os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "Graph.html"))))
 
     def getAlgoSelection(self):
         return self.comboBox.currentText()
