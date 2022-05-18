@@ -62,7 +62,6 @@ def dfs_iterate_till_goal(MGraph,start,Goal):
     #     print(i)
     
     T = nx.dfs_tree(MGraph, source=start)
-    print('here')
     for i in T:
         visited.append(i)
         print(i)
