@@ -33,7 +33,7 @@ def bfspath(graph, start, Goal):
         # get the last node from the path
         node = path[-1]
         # path found
-        if node == Goal:
+        if node in Goal:
             return path
         # enumerate all adjacent nodes, construct a 
         # new path and push it into the queue
@@ -68,7 +68,7 @@ def bfs_iterate_till_goal(MGraph,start,Goal):#we need to make goal list
     T = nx.bfs_tree(MGraph, source=start)
     for i in T:
         visited.append(i)
-        if(i==Goal):
+        if(i in Goal):
             return visited
 
         
