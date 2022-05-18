@@ -68,7 +68,6 @@ def dfs_iterate_till_goal(MGraph,start,Goal):
         print(i)
         if(i==Goal):
             return visited
-    print('here')
     
     
 # #networkx function that return a list sorted by visited edges    
