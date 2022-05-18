@@ -1,13 +1,13 @@
 import networkx as nx
-# g=nx.Graph()
-# g.add_node(1,h=9,id=1,parent=None)
-# g.add_node(3,h=6,id=3)
-# g.add_node(2,h=7,id=2)
-# g.add_edge(1,2,weight=6)
-# g.add_edge(1,3,weight=4)
-# g.add_node(4,h=0,id=4)
-# g.add_edge(3,4,weight=10)
-# g.add_edge(1,4,weight=500)
+g=nx.Graph()
+g.add_node(1,h=9,id=1,parent=None)
+g.add_node(3,h=6,id=3)
+g.add_node(2,h=7,id=2)
+g.add_edge(1,2,weight=6)
+g.add_edge(1,3,weight=4)
+g.add_node(4,h=0,id=4)
+g.add_edge(3,4,weight=10)
+g.add_edge(1,4,weight=500)
 
 
 
