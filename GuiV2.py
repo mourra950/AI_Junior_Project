@@ -20,93 +20,120 @@ from pyvis.network import Network
 from PyQt5 import QtWebEngineWidgets
 import networkx as nx
 import Omar.BFS as bfs
-#import Greedy as gr
+
+# import Greedy as gr
 G = nx.DiGraph()
 
 counter = 1
-def getPath(g,node):
-    path=[]
-    #cost=0
+
+
+def getPath(node):
+    path = []
+    cost = 0
     path.append(node)
-    while not(g.nodes[node]['parent'] is None):
-        path.append(g.nodes[node]['parent'])
-        #cost += nx.get_edge_attributes(g, 'weight')[(g.nodes[node]['parent'],node)]
-        node=g.nodes[node]['parent']
+    while not (G.nodes[node]['parent'] is None):
+        path.append(G.nodes[node]['parent'])
+        cost += nx.get_edge_attributes(G, 'weight')[(G.nodes[node]['parent'], node)]
+        node = G.nodes[node]['parent']
     path.reverse()
-    return path
+    return path, cost
+
+
 def getH(node):
     return G.nodes[node]['h']
-def greedy(g,start,goal):
-    fringe=[]
-    visited=[]
-    if not(start in g.nodes):
+
+
+def greedy(g, start, goal):
+    fringe = []
+    visited = []
+    if not (start in g.nodes):
         print("not in the graph")
         return
     else:
         fringe.append(start)
-        x=fringe[0]
-        while not(len(fringe)==0):
-            x=fringe[0]
+        x = fringe[0]
+        while not (len(fringe) == 0):
+            x = fringe[0]
             visited.append(x)
             fringe.pop(0)
             if x == goal:
-                print("Goal is "+ str(x),sep=" ")
-                return visited
-            for y in nx.all_neighbors(g,x):
-                if not(y in visited):
+                print("Goal is " + str(x), sep=" ")
+                return visited, getPath(x)
+            for y in nx.all_neighbors(g, x):
+                if not (y in visited):
                     fringe.append(y)
                     nx.set_node_attributes(g, {y: x}, name="parent")
 
             fringe.sort(key=getH)
 
+
 class Ui_MainWindow(object):
     def pathshow(self):
-        path,cost=bfs.bfs_path(G,self.getS(),self.getGs())
-        temp=''.join(path)
-        temp+=' and the cost is: '+str(cost)
-        self.showPathcost.setText(temp)
-        self.showPath(path,len(path),'#Fcc201')
+        if self.getAlgoSelection() == "BFS":
+            path, cost = bfs.bfs_path(G, self.getS(), self.getGs())
+            temp = ''.join(path)
+            temp += ' and the cost is: ' + str(cost)
+            self.showPathcost.setText(temp)
+            self.showPath(path, len(path), '#FF0000')
+        elif self.getAlgoSelection() == "Greedy":
+            x, pathandcost = greedy(G, self.getS(), self.getGs())
+            path, cost = pathandcost
+            temp = ''.join(path)
+            temp += ' and the cost is: ' + str(cost)
+            self.showPathcost.setText(temp)
+            self.showPath(path, len(path), '#FF0000')
+        elif self.getAlgoSelection() == "DFS":
+            var = 0  # DELETE THIS LINE
+            # Add DFS call
+        elif self.getAlgoSelection() == "Uniform Cost":
+            var = 0  # DELETE THIS LINE
+            # Add UCS call
+        elif self.getAlgoSelection() == "Iterative Deepening":
+            var = 0  # DELETE THIS LINE
+            # Add Iterative Deepening call
+
     def Reset(self):
         global counter
-        counter=1
+        counter = 1
         self.draw()
-        
-    def showPath(self,visited,counter,Mcolor):
+        self.showPathcost.clear()
+
+    def showPath(self, visited, counter, Mcolor):
         N = Network(height='100%', width='100%', directed=True)
-        count=0
+        count = 0
         for i in visited:
-            if counter>count:
+            if counter > count:
                 N.add_node(i, color=Mcolor)
                 count += 1
             else:
                 N.add_node(i)
 
         for i in nx.nodes(G):
-            if i  not in visited :
+            if i not in visited:
                 N.add_node(i)
         for i in nx.nodes(G):
             for j in nx.neighbors(G, i):
-                N.add_edge(i, j,color='#Fcc201')
+                N.add_edge(i, j, color='#Fcc201')
         N.write_html('Graph.html')
         self.web.load(QUrl.fromLocalFile(os.path.abspath(os.path.join(os.path.dirname(__file__), "Graph.html"))))
 
     def loadGraph(self):
         global counter
-        if self.getAlgoSelection()=="Greedy":
-            visited = greedy(G,self.getS(),self.getGs())
+        if self.getAlgoSelection() == "Greedy":
+            visited, path = greedy(G, self.getS(), self.getGs())
 
-            self.showPath(visited, counter)
+            self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
-        elif self.getAlgoSelection()=="BFS":
-            visited=bfs.bfs_iterate_till_goal(G,self.getS(),self.getGs())
+        elif self.getAlgoSelection() == "BFS":
+            visited = bfs.bfs_iterate_till_goal(G, self.getS(), self.getGs())
             # print(visited)
 
-            self.showPath(visited, counter)
+            self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
-        elif self.getAlgoSelection()=="Uniformed Cost":
-            visited = Ucs.ucs(G,'s','g')
+        elif self.getAlgoSelection() == "Uniform Cost":
+            visited = Ucs.ucs(G, 's', 'g')
             print(visited)
 
             self.showPath(visited, counter)
@@ -114,36 +141,43 @@ class Ui_MainWindow(object):
             visited.clear()
 
     def getS(self):
-        if(self.StartNode.text()!=''):
-            if(self.StartNode.text() in nx.nodes(G)):
+        if (self.StartNode.text() != ''):
+            if (self.StartNode.text() in nx.nodes(G)):
+
                 return self.StartNode.text()
             else:
-                self.errorbox('error','start is not found') 
+                self.errorbox('error', 'start is not found')
         else:
-            self.errorbox('error','cant be empty')
+            self.errorbox('error', 'cant be empty')
+
     def getGs(self):
         return self.Goals.text()
-    def errorbox(self,Title,Text):
+
+    def errorbox(self, Title, Text):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
         msg.setText(Text)
         msg.setWindowTitle(Title)
         msg.exec_()
+
     # custom funtions
     def GraphType(self):
         global G
 
-        
-        if(self.Directed.isChecked()):
-            G=nx.DiGraph()
+        if (self.Directed.isChecked()):
+            G = nx.DiGraph()
         else:
-            G=nx.Graph
+            G = nx.Graph
+
     def getNodeName(self):
         return self.InsertedNode.text()
+
     def getHe(self):
         return self.HeuristicNode.text()
+
     def getWe(self):
         return self.WeightEdge.text()
+
     def getFromNode(self):
         return self.FromNode.text()
 
@@ -152,39 +186,38 @@ class Ui_MainWindow(object):
 
     def insertNode(self):
         if self.getNodeName() == "":
-            self.errorbox('Node error','N can not be null')
+            self.errorbox('Node error', 'N can not be null')
         elif self.getNodeName() in nx.nodes(G):
-            self.errorbox('Exists already','Node exists')
+            self.errorbox('Exists already', 'Node exists')
         else:
-            if(self.getHe().isdigit()):
-                
-                G.add_node(self.getNodeName(),h=int(self.getHe()))
+            if (self.getHe().isdigit()):
+
+                G.add_node(self.getNodeName(), h=int(self.getHe()), parent=None)
                 print(G.nodes)
                 self.draw()
                 self.HeuristicNode.clear()
                 self.InsertedNode.clear()
             else:
-                self.errorbox('Heuristic error','H must be integer')
-                
+                self.errorbox('Heuristic error', 'H must be integer')
 
     def insertEdge(self):
-        if self.getFromNode() == "" or self.getFromNode() not in nx.nodes(G) or self.getToNode() == "" or self.getToNode() not in nx.nodes(G):
-            self.errorbox('error','Enter Valid Nodes')
+        if self.getFromNode() == "" or self.getFromNode() not in nx.nodes(
+                G) or self.getToNode() == "" or self.getToNode() not in nx.nodes(G):
+            self.errorbox('error', 'Enter Valid Nodes')
         else:
-            if(self.getWe().isdigit()):
-                G.add_edge(self.getFromNode(), self.getToNode(),weight=int(self.getWe()))
+            if (self.getWe().isdigit()):
+                G.add_edge(self.getFromNode(), self.getToNode(), weight=int(self.getWe()))
                 self.ToNode.clear()
                 self.FromNode.clear()
                 self.draw()
             else:
-                self.errorbox('error','weight must be an integer')
-                
+                self.errorbox('error', 'weight must be an integer')
+
             self.WeightEdge.clear()
-            
 
     def deleteNode(self):
         if self.getNodeName() not in nx.nodes(G):
-            self.errorbox('error','Node doesnt exist')
+            self.errorbox('error', 'Node doesnt exist')
         else:
             G.remove_node(self.getNodeName())
             self.draw()
@@ -193,7 +226,7 @@ class Ui_MainWindow(object):
     def draw(self):
         # if(self.Directed.isChecked()):
         #     print("mama")
-        N = Network(height='100%', width='100%',directed=True)
+        N = Network(height='100%', width='100%', directed=True)
         # else:
         #     print("7elwa")
         #     N = Network(height='100%', width='100%',directed=True)
@@ -201,10 +234,9 @@ class Ui_MainWindow(object):
             N.add_node(i)
         for i in nx.nodes(G):
             for j in nx.neighbors(G, i):
-                N.add_edge(i, j, color='#Fcc201',title=G[i][j]['weight'])
+                N.add_edge(i, j, color='#Fcc201', title=G[i][j]['weight'])
         N.write_html('Graph.html')
         self.web.load(QUrl.fromLocalFile(os.path.abspath(os.path.join(os.path.dirname(__file__), "Graph.html"))))
-        
 
     def getAlgoSelection(self):
         return self.comboBox.currentText()
@@ -212,9 +244,9 @@ class Ui_MainWindow(object):
     def deleteEdge(self):
         if self.getFromNode() == "" or self.getFromNode() not in nx.nodes(
                 G) or self.getToNode() == "" or self.getToNode() not in nx.nodes(G):
-            self.errorbox('error','Enter Valid node')
+            self.errorbox('error', 'Enter Valid node')
         elif not G.has_edge(self.getFromNode(), self.getToNode()):
-            self.errorbox('error','Enter Valid edge')
+            self.errorbox('error', 'Enter Valid edge')
         else:
             G.remove_edge(self.getFromNode(), self.getToNode())
             self.draw()
@@ -222,6 +254,7 @@ class Ui_MainWindow(object):
         self.FromNode.clear()
 
         # end of custom functions
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1120, 623)
@@ -387,7 +420,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addWidget(self.StartAlgo)
         self.Directed = QtWidgets.QRadioButton(self.groupBox_6)
         self.Directed.setObjectName("Directed")
-        
+
         self.verticalLayout_6.addWidget(self.Directed)
         self.ResetGraph = QtWidgets.QPushButton(self.groupBox_6)
         self.ResetGraph.setObjectName("ResetGraph")
@@ -445,7 +478,8 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "Edge to:"))
         self.label_7.setText(_translate("MainWindow", "Edge Weight"))
         self.label.setText(_translate(
-            "MainWindow", "<html><head/><body><p><span style=\" font-size:11pt;\">Select Algorithm</span></p></body></html>"))
+            "MainWindow",
+            "<html><head/><body><p><span style=\" font-size:11pt;\">Select Algorithm</span></p></body></html>"))
         self.comboBox.setItemText(0, _translate("MainWindow", "BFS"))
         self.comboBox.setItemText(1, _translate("MainWindow", "DFS"))
         self.comboBox.setItemText(2, _translate("MainWindow", "Uniform Cost"))
@@ -459,20 +493,22 @@ class Ui_MainWindow(object):
         self.StartAlgo.setText(_translate("MainWindow", "Start"))
         self.Directed.setText(_translate("MainWindow", "Directed"))
         # self.Directed.clicked.connect(lambda: self.GraphType())
-        #reset functionality
+        # reset functionality
         self.ResetGraph.setText(_translate("MainWindow", "reset"))
         self.ResetGraph.clicked.connect(lambda: self.Reset())
-        #reset end
-        #NEXT FUNCTION
+        # reset end
+        # NEXT FUNCTION
         self.NextButton.setText(_translate("MainWindow", "Next"))
         self.NextButton.clicked.connect(lambda: self.loadGraph())
-        #END NEXT FUNCTION
-        
+        # END NEXT FUNCTION
+
         self.pathShow.setText(_translate("MainWindow", "show path"))
         self.pathShow.clicked.connect(lambda: self.pathshow())
 
+
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
