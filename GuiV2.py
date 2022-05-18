@@ -22,6 +22,7 @@ import networkx as nx
 import Omar.BFS as bfs
 import Omar.DFS as dfs
 
+
 # import Greedy as gr
 G = nx.DiGraph()
 
@@ -96,6 +97,14 @@ class Ui_MainWindow(object):
         elif self.getAlgoSelection() == "Iterative Deepening":
             var = 0  # DELETE THIS LINE
             # Add Iterative Deepening call
+        elif self.getAlgoSelection() == "A*":
+            path = nx.astar_path(G, self.getS(), self.getGs(), heuristic=None, weight='weight')
+            cost = nx.astar_path_length(G, self.getS(), self.getGs(), heuristic=None, weight='weight')
+            temp = ''.join(path)
+            temp += ' and the cost is: ' + str(cost)
+            self.showPathcost.setText(temp)
+            self.showPath(path, len(path), '#FF0000')
+
 
     def Reset(self):
         global counter
@@ -140,12 +149,14 @@ class Ui_MainWindow(object):
             self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
-        elif self.getAlgoSelection() == "Uniform Cost":
-            visited = Ucs.ucs(G, 's', 'g')
-            print(visited)
-            self.showPath(visited, counter)
-            counter += 1
-            visited.clear()
+        # elif self.getAlgoSelection() == "Uniform Cost":
+        #     visited = Ucs.ucs(G, 's', 'g')
+        #     print(visited)
+        #     self.showPath(visited, counter)
+        #     counter += 1
+        #     visited.clear()
+
+
 
     def getS(self):
         if (self.StartNode.text() != ''):

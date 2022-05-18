@@ -1,7 +1,7 @@
 <html>
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
 <center>
 <h1></h1>
 </center>
@@ -50,8 +50,8 @@
         
 
         // parsing and collecting nodes and edges from the python
-        nodes = new vis.DataSet([{"id": "x", "label": "x", "shape": "dot"}, {"id": "y", "label": "y", "shape": "dot"}, {"id": "yx", "label": "yx", "shape": "dot"}]);
-        edges = new vis.DataSet([{"arrows": "to", "color": "#Fcc201", "from": "x", "title": 4, "to": "y"}, {"arrows": "to", "color": "#Fcc201", "from": "yx", "title": 3, "to": "x"}]);
+        nodes = new vis.DataSet([{"color": "#FF0000", "id": "s", "label": "s", "shape": "dot"}, {"color": "#FF0000", "id": "b", "label": "b", "shape": "dot"}, {"color": "#FF0000", "id": "f", "label": "f", "shape": "dot"}, {"color": "#FF0000", "id": "g", "label": "g", "shape": "dot"}, {"id": "a", "label": "a", "shape": "dot"}, {"id": "c", "label": "c", "shape": "dot"}, {"id": "d", "label": "d", "shape": "dot"}, {"id": "e", "label": "e", "shape": "dot"}, {"id": "h", "label": "h", "shape": "dot"}, {"id": "i", "label": "i", "shape": "dot"}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "#Fcc201", "from": "a", "to": "c"}, {"arrows": "to", "color": "#Fcc201", "from": "a", "to": "d"}, {"arrows": "to", "color": "#Fcc201", "from": "b", "to": "e"}, {"arrows": "to", "color": "#Fcc201", "from": "b", "to": "f"}, {"arrows": "to", "color": "#Fcc201", "from": "e", "to": "h"}, {"arrows": "to", "color": "#Fcc201", "from": "f", "to": "i"}, {"arrows": "to", "color": "#Fcc201", "from": "f", "to": "g"}, {"arrows": "to", "color": "#Fcc201", "from": "s", "to": "a"}, {"arrows": "to", "color": "#Fcc201", "from": "s", "to": "b"}]);
 
         // adding nodes and edges to the graph
         data = {nodes: nodes, edges: edges};
@@ -65,8 +65,8 @@
             "inherit": true
         },
         "smooth": {
-            "enabled": true,
-            "type": "dynamic"
+            "enabled": false,
+            "type": "continuous"
         }
     },
     "interaction": {
