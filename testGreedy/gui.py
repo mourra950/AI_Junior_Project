@@ -94,6 +94,7 @@ class Ui_MainWindow(object):
         return int(self.lineEdit.text())
     def addNodegui(self):
         g.add_node(self.getnodeID(),h=self.getnodeH(),id=self.getnodeID(),parent=None)
+        print(g.nodes[5]['h'])
         self.lineEdit_4.clear()
         self.lineEdit_3.clear()
         self.visualize()
