@@ -88,4 +88,4 @@ def ucs_visited_nodes(g,start,Goals):
 
     print(lst)
     
-ucs_visited_nodes()
+ucs_visited_nodes(g,'s','g')
