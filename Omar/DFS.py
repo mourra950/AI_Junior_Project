@@ -26,22 +26,24 @@ edgesVisited=[]
 def dfs_iterate_till_goal(MGraph,start,Goal):
 #add the start node immediatly
     visited.append(start)
-    
+#networkx function that return a list sorted by visited nodes
     NodesIterator=nx.dfs_successors(MGraph, source=start)
-    
+#networkx function that return a list sorted by visited edges    
     EdgeIterator=nx.dfs_edges(MGraph,source=start)
+#create a list of visited edges until goal
     Edgelist=list(EdgeIterator)
-    
+#create a list of visited edges until goal
     for i in Edgelist:
         edgesVisited.append(i)
         if(i[1]==Goal):
             break
-    
+#create list of visited nodes until goal
     for succesors in NodesIterator:
         for childnodes in succesors:
             visited.append(childnodes)
             if(childnodes==Goal):
                 return visited,edgesVisited
+#return the 2 lists            
     return visited,edgesVisited         
             
             
