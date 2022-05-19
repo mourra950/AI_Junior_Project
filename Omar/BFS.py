@@ -68,7 +68,7 @@ def bfs_iterate_till_goal(MGraph,start,Goal):#we need to make goal list
     T = nx.bfs_tree(MGraph, source=start)
     for i in T:
         visited.append(i)
-        if(i in Goal):
+        if i in Goal:
             return visited
 
         

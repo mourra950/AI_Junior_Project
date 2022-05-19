@@ -37,7 +37,7 @@ def greedy(g,start,goal):
             x=fringe[0]
             visited.append(x)
             fringe.pop(0)
-            if x == goal:
+            if x in goal:
                 print("Goal is "+ str(x),sep=" ")
                 return visited
             for y in nx.all_neighbors(g,x):

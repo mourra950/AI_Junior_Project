@@ -2,20 +2,20 @@ import networkx as nx
 G = nx.Graph()
 #creating a test graph using sheet 2 in ai
 #creating nodes
-# G.add_node('a')
-# G.add_node('b')
-# G.add_node('c')
-# G.add_node('d')
-# G.add_node('s')
-# G.add_node('g')
-# #creating edges
-# G.add_edge('s', 'g', weight=12)
-# G.add_edge('s', 'a', weight=1)
+G.add_node('a')
+G.add_node('b')
+G.add_node('c')
+G.add_node('d')
+G.add_node('s')
+G.add_node('g')
+#creating edges
+G.add_edge('s', 'g', weight=12)
+G.add_edge('s', 'a', weight=1)
 
-# G.add_edge('a', 'b', weight=3)
-# G.add_edge('b', 'd', weight=3)
-# G.add_edge('a', 'c', weight=1)
-# G.add_edge('c', 'd', weight=1)
+G.add_edge('a', 'b', weight=3)
+G.add_edge('b', 'd', weight=3)
+G.add_edge('a', 'c', weight=1)
+G.add_edge('c', 'd', weight=1)
 # print(nx.number_of_nodes(G))
 
 visited=[]
@@ -48,6 +48,7 @@ def dfs_path(MGraph,start,Goal):#we need to make goal list
     for i in Iterator:
         adj[i[0]]=i[1]
     #get the path
+    print(adj)
     path=dfspath(adj,start,Goal)
     for i in range(len(path)-1):
         cost+=MGraph[path[i]][path[i+1]]['weight']
@@ -65,7 +66,7 @@ def dfs_iterate_till_goal(MGraph,start,Goal):
     for i in T:
         visited.append(i)
         print(i)
-        if(i in Goal):
+        if i in Goal:
             return visited
     
     
@@ -93,3 +94,4 @@ def dfs_iterate_till_goal(MGraph,start,Goal):
 #     s=dfs_iterate_till_goal(G,'s','g')
 #     print(s)
 # main()
+print(dfs_path(G,'s','g'))

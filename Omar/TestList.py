@@ -12,15 +12,15 @@ G.add_node('h',h=4)
 G.add_node('i',h=9)
 G.add_node('s',h=13)
 G.add_node('g',h=0)
-G.add_edge('s', 'a',h=3)
-G.add_edge('s', 'b',h=4)
-G.add_edge('a', 'c',h=7)
-G.add_edge('a', 'd',h=3)
-G.add_edge('b', 'e',h=8)
-G.add_edge('b', 'f',h=2)
-G.add_edge('e', 'h',h=4)
-G.add_edge('f', 'i',h=9)
-G.add_edge('f', 'g',h=0)
+G.add_edge('s', 'a',weight=3)
+G.add_edge('s', 'b',weight=4)
+G.add_edge('a', 'c',weight=7)
+G.add_edge('a', 'd',weight=3)
+G.add_edge('b', 'e',weight=8)
+G.add_edge('b', 'f',weight=2)
+G.add_edge('e', 'h',weight=4)
+G.add_edge('f', 'i',weight=9)
+G.add_edge('f', 'g',weight=0)
 
 def bfspath(graph, start, Goal):
     # maintain a queue of paths
@@ -74,5 +74,8 @@ def bfs_iterate_till_goal(MGraph, start, Goal):  # we need to make goal list
         visited.append(i)
         if (i in Goal):
             return visited
-
-bfspath(G,'s',['f','e'])
+test='5,6,7'
+test1=test.split(',')
+print(test1)
+for i in test1:
+    print(i)

@@ -169,7 +169,9 @@ class Ui_MainWindow(object):
             self.errorbox('error', 'cant be empty')
 
     def getGs(self):
-        return self.Goals.text()
+        temp=list(self.Goals.text().split(','))
+        
+        return temp
 
     def errorbox(self, Title, Text):
         msg = QMessageBox()

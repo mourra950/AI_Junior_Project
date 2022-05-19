@@ -50,6 +50,7 @@ def ucs(graph,s,g):#return list of nodes
             return path
         else:
             adj_nodes=graph.get(node,[])
+            print(adj_nodes)
             for(node2,cost) in adj_nodes:
                 new_path=path.copy()
                 new_path.append((node2,cost))
