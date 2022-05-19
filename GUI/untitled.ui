@@ -27,7 +27,8 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">QGroupBox {border:0;}</string>
+       <string notr="true">QGroupBox {border:0;}
+font: 75 14pt &quot;8514oem&quot;;</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
@@ -50,6 +51,15 @@
             <string/>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>30</number>
+            </property>
+            <property name="bottomMargin">
+             <number>30</number>
+            </property>
             <item>
              <widget class="QPushButton" name="InsertNode">
               <property name="text">
@@ -109,26 +119,55 @@ border:0;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <property name="spacing">
-              <number>6</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>30</number>
              </property>
              <property name="rightMargin">
               <number>9</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>80</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="InsertedNode"/>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioButton">
+              <widget class="QLabel" name="label_3">
+               <property name="font">
+                <font>
+                 <family>8514oem</family>
+                 <pointsize>18</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
-                <string>Goal State</string>
+                <string>Node name</string>
                </property>
               </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="InsertedNode">
+               <property name="toolTip">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="font">
+                <font>
+                 <family>8514oem</family>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Node Heuristics</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="HeuristicNode"/>
              </item>
             </layout>
            </widget>
@@ -143,16 +182,40 @@ border:0;</string>
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>63</number>
+              <number>30</number>
              </property>
              <property name="bottomMargin">
               <number>73</number>
              </property>
              <item>
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Edge from :</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLineEdit" name="FromNode"/>
              </item>
              <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Edge to:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLineEdit" name="ToNode"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Edge Weight</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="WeightEdge"/>
              </item>
             </layout>
            </widget>
@@ -183,6 +246,14 @@ border:0;</string>
               <height>50</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <family>8514oem</family>
+              <pointsize>28</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="text">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Select Algorithm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
@@ -205,12 +276,22 @@ border:0;</string>
             </item>
             <item>
              <property name="text">
-              <string>Uniformed Cost</string>
+              <string>Uniform Cost</string>
              </property>
             </item>
             <item>
              <property name="text">
               <string>Iterative Deepening</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Greedy</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>A*</string>
              </property>
             </item>
            </widget>
@@ -241,26 +322,64 @@ border:0;</string>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit">
+              <widget class="QLineEdit" name="StartNode">
                <property name="text">
                 <string/>
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Goal(insert ',' between goals)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="Goals"/>
+             </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="StartAlgo">
             <property name="text">
              <string>Start</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QRadioButton" name="Directed">
+            <property name="text">
+             <string>Directed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="ResetGraph">
             <property name="text">
              <string>reset</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="NextButton">
+            <property name="text">
+             <string>Next</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pathShow">
+            <property name="text">
+             <string>show path</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="showPathcost">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -277,6 +396,11 @@ border:0;</string>
         <width>250</width>
         <height>0</height>
        </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-color: rgb(0, 255, 0);
+border: 4px;
+background-color: rgb(170, 255, 0);</string>
       </property>
      </widget>
     </item>

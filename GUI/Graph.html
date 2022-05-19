@@ -50,8 +50,8 @@
         
 
         // parsing and collecting nodes and edges from the python
-        nodes = new vis.DataSet([{"h": 6, "id": 1, "label": 1, "shape": "dot", "size": 10}, {"h": 8, "id": 2, "label": 2, "shape": "dot", "size": 10}]);
-        edges = new vis.DataSet([]);
+        nodes = new vis.DataSet([{"color": "#FF0000", "id": "s", "label": "s", "shape": "dot"}, {"color": "#FF0000", "id": "b", "label": "b", "shape": "dot"}, {"color": "#FF0000", "id": "f", "label": "f", "shape": "dot"}, {"color": "#FF0000", "id": "g", "label": "g", "shape": "dot"}, {"id": "a", "label": "a", "shape": "dot"}, {"id": "c", "label": "c", "shape": "dot"}, {"id": "d", "label": "d", "shape": "dot"}, {"id": "e", "label": "e", "shape": "dot"}, {"id": "h", "label": "h", "shape": "dot"}, {"id": "i", "label": "i", "shape": "dot"}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "#Fcc201", "from": "a", "to": "c"}, {"arrows": "to", "color": "#Fcc201", "from": "a", "to": "d"}, {"arrows": "to", "color": "#Fcc201", "from": "b", "to": "e"}, {"arrows": "to", "color": "#Fcc201", "from": "b", "to": "f"}, {"arrows": "to", "color": "#Fcc201", "from": "e", "to": "h"}, {"arrows": "to", "color": "#Fcc201", "from": "f", "to": "i"}, {"arrows": "to", "color": "#Fcc201", "from": "f", "to": "g"}, {"arrows": "to", "color": "#Fcc201", "from": "s", "to": "a"}, {"arrows": "to", "color": "#Fcc201", "from": "s", "to": "b"}]);
 
         // adding nodes and edges to the graph
         data = {nodes: nodes, edges: edges};

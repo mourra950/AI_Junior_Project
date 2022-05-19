@@ -10,20 +10,21 @@ g.add_edge(3,4,weight=10)
 g.add_edge(1,4,weight=500)
 
 
-def getPath(node):
+
+def getPath(g,node):
     path=[]
-    cost=0
+    #cost=0
     path.append(node)
     while not(g.nodes[node]['parent'] is None):
         path.append(g.nodes[node]['parent'])
-        cost += nx.get_edge_attributes(g, 'weight')[(g.nodes[node]['parent'],node)]
+        #cost += nx.get_edge_attributes(g, 'weight')[(g.nodes[node]['parent'],node)]
         node=g.nodes[node]['parent']
     path.reverse()
-    return path,cost
+    return path
 
 def getH(node):
     return g.nodes[node]['h']
-def greedy(start,goal):
+def greedy(g,start,goal):
     fringe=[]
     visited=[]
     if not(start in g.nodes):
@@ -38,15 +39,12 @@ def greedy(start,goal):
             fringe.pop(0)
             if x in goal:
                 print("Goal is "+ str(x),sep=" ")
-                print(getPath(x))
-                return
+                return visited
             for y in nx.all_neighbors(g,x):
                 if not(y in visited):
                     fringe.append(y)
                     nx.set_node_attributes(g, {y: x}, name="parent")
 
             fringe.sort(key=getH)
-    print(visited)
-goal=[4,2]
-greedy(1,goal)
+
 
