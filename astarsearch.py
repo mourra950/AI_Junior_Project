@@ -35,7 +35,7 @@ def path_f_cost(path):
     return f_cost,last_node
 
 
-def ucs_visited(Graph,s,g):#return list of nodes
+def A_visited(Graph,s,g):#return list of nodes
     graph1=dict(Graph.adjacency())
     graph={}
     print(graph1.keys())
@@ -67,9 +67,8 @@ def ucs_visited(Graph,s,g):#return list of nodes
                 new_path.append((node2,cost))
                 queue.append(new_path)
 
-def ucs_visited_nodes(g,start,Goals):
-    lst=list(ucs_visited(g,start,Goals))
+def A_visited_nodes(g,start,Goals):
+    lst=list(A_visited(g,start,Goals))
 
     print(lst)
     
-ucs_visited_nodes(g,'s','g')
