@@ -26,8 +26,8 @@ import Algorithms.UniformCost as Ucs
 
 
 # import Greedy as gr
+Gt = nx.DiGraph()
 G = nx.DiGraph()
-
 counter = 1
 
 
@@ -74,6 +74,7 @@ def greedy(g, start, goal):
 
 class Ui_MainWindow(object):
     def pathshow(self):
+        self.GraphType()
         if self.getAlgoSelection() == "BFS":
             path, cost = bfs.bfs_path(G, self.getS(), self.getGs())
             temp = ''.join(path)
@@ -146,6 +147,7 @@ class Ui_MainWindow(object):
 
     def loadGraph(self):
         global counter
+        self.GraphType()
         if self.getAlgoSelection() == "Greedy":
             visited, path = greedy(G, self.getS(), self.getGs())
             self.showPath(visited, counter, "#FFFF00")
@@ -184,7 +186,7 @@ class Ui_MainWindow(object):
 
     def getS(self):
         if (self.StartNode.text() != ''):
-            if (self.StartNode.text() in nx.nodes(G)):
+            if (self.StartNode.text() in nx.nodes(Gt)):
 
                 return self.StartNode.text()
             else:
@@ -207,11 +209,11 @@ class Ui_MainWindow(object):
     # custom funtions
     def GraphType(self):
         global G
-
         if (self.Directed.isChecked()):
-            G = nx.DiGraph()
+            G = Gt
         else:
-            G = nx.Graph
+            G = Gt.to_undirected()
+        
 
     def getNodeName(self):
         return self.InsertedNode.text()
@@ -231,12 +233,12 @@ class Ui_MainWindow(object):
     def insertNode(self):
         if self.getNodeName() == "":
             self.errorbox('Node error', 'N can not be null')
-        elif self.getNodeName() in nx.nodes(G):
+        elif self.getNodeName() in nx.nodes(Gt):
             self.errorbox('Exists already', 'Node exists')
         else:
             if (self.getHe().isdigit()):
 
-                G.add_node(self.getNodeName(), h=int(
+                Gt.add_node(self.getNodeName(), h=int(
                     self.getHe()), parent=None)
                 print(G.nodes)
                 self.draw()
@@ -247,11 +249,11 @@ class Ui_MainWindow(object):
 
     def insertEdge(self):
         if self.getFromNode() == "" or self.getFromNode() not in nx.nodes(
-                G) or self.getToNode() == "" or self.getToNode() not in nx.nodes(G):
+                Gt) or self.getToNode() == "" or self.getToNode() not in nx.nodes(Gt):
             self.errorbox('error', 'Enter Valid Nodes')
         else:
             if (self.getWe().isdigit()):
-                G.add_edge(self.getFromNode(), self.getToNode(),
+                Gt.add_edge(self.getFromNode(), self.getToNode(),
                            weight=int(self.getWe()))
                 self.ToNode.clear()
                 self.FromNode.clear()
@@ -262,14 +264,15 @@ class Ui_MainWindow(object):
             self.WeightEdge.clear()
 
     def deleteNode(self):
-        if self.getNodeName() not in nx.nodes(G):
+        if self.getNodeName() not in nx.nodes(Gt):
             self.errorbox('error', 'Node doesnt exist')
         else:
-            G.remove_node(self.getNodeName())
+            Gt.remove_node(self.getNodeName())
             self.draw()
         self.InsertedNode.clear()
 
     def draw(self):
+        self.GraphType()
         # if(self.Directed.isChecked()):
         N = Network(height='100%', width='100%', directed=True)
         # else:
@@ -288,12 +291,12 @@ class Ui_MainWindow(object):
 
     def deleteEdge(self):
         if self.getFromNode() == "" or self.getFromNode() not in nx.nodes(
-                G) or self.getToNode() == "" or self.getToNode() not in nx.nodes(G):
+                Gt) or self.getToNode() == "" or self.getToNode() not in nx.nodes(Gt):
             self.errorbox('error', 'Enter Valid node')
-        elif not G.has_edge(self.getFromNode(), self.getToNode()):
+        elif not Gt.has_edge(self.getFromNode(), self.getToNode()):
             self.errorbox('error', 'Enter Valid edge')
         else:
-            G.remove_edge(self.getFromNode(), self.getToNode())
+            Gt.remove_edge(self.getFromNode(), self.getToNode())
             self.draw()
         self.ToNode.clear()
         self.FromNode.clear()
