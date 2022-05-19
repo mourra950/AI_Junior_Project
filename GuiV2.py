@@ -19,8 +19,10 @@ from PyQt5.QtWidgets import QMessageBox
 from pyvis.network import Network
 from PyQt5 import QtWebEngineWidgets
 import networkx as nx
-import Omar.BFS as bfs
-import Omar.DFS as dfs
+import Algorithms.BFS as bfs
+import Algorithms.DFS as dfs
+import Algorithms.astarsearch as Astar
+import Algorithms.UniformCost as Ucs
 
 
 # import Greedy as gr
@@ -92,14 +94,24 @@ class Ui_MainWindow(object):
             self.showPathcost.setText(temp)
             self.showPath(path, len(path), '#FF0000')
         elif self.getAlgoSelection() == "Uniform Cost":
-            var = 0  # DELETE THIS LINE
+            path, cost = Ucs.UCS(G, self.getS(), self.getGs())
+            temp = ''.join(path)
+            temp += ' and the cost is: ' + str(cost)
+            self.showPathcost.setText(temp)
+            self.showPath(path, len(path), '#FF0000')
             # Add UCS call
         elif self.getAlgoSelection() == "Iterative Deepening":
             var = 0  # DELETE THIS LINE
             # Add Iterative Deepening call
         elif self.getAlgoSelection() == "A*":
-            path = nx.astar_path(G, self.getS(), self.getGs(), heuristic=None, weight='weight')
-            cost = nx.astar_path_length(G, self.getS(), self.getGs(), heuristic=None, weight='weight')
+            path = nx.astar_path(G, self.getS(), self.getGs()[0], heuristic=None, weight='weight')
+            cost = nx.astar_path_length(G, self.getS(),self.getGs()[0], heuristic=None, weight='weight')
+            for i in self.getGs():
+                temppath = nx.astar_path(G, self.getS(), i, heuristic=None, weight='weight')
+                tempcost = nx.astar_path_length(G, self.getS(),i, heuristic=None, weight='weight')
+                if cost>tempcost:
+                    cost=tempcost
+                    path=temppath
             temp = ''.join(path)
             temp += ' and the cost is: ' + str(cost)
             self.showPathcost.setText(temp)
@@ -149,12 +161,24 @@ class Ui_MainWindow(object):
             self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
-        # elif self.getAlgoSelection() == "Uniform Cost":
-        #     visited = Ucs.ucs(G, 's', 'g')
-        #     print(visited)
-        #     self.showPath(visited, counter)
-        #     counter += 1
-        #     visited.clear()
+        elif self.getAlgoSelection() == "A*":
+            visited = Astar.A_visited_nodes(G, self.getS(), self.getGs())
+            self.showPath(visited, counter, "#FFFF00")
+            counter += 1
+            visited.clear()
+        elif self.getAlgoSelection() == "Uniform Cost":
+            visited = Ucs.ucs_visited_nodes(G, self.getS(), self.getGs())
+            
+            self.showPath(visited, counter, "#FFFF00")
+            counter += 1
+            visited.clear()
+        elif self.getAlgoSelection() == "Iterative Deepening":
+            visited = Ucs.ucs_visited_nodes(G, self.getS(), self.getGs())
+            self.showPath(visited, counter, "#FFFF00")
+            counter += 1
+            visited.clear()
+        # Iterative Deepening
+
 
 
 

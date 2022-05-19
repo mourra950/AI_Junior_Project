@@ -119,14 +119,30 @@ class Ui_MainWindow(object):
             self.showPath(visited, counter)
             counter += 1
             visited.clear()
-        elif self.getAlgoSelection()=="Uniformed Cost":
-            visited = Ucs.ucs(G,'s','g')
+        elif self.getAlgoSelection()=="Uniform Cost":
+            visited = Ucs.ucs_visited(G,'s','g')
             print(visited)
 
             self.showPath(visited, counter)
             counter += 1
             visited.clear()
+        elif self.getAlgoSelection()=="A*":
+            visited = Astar.A_visited_nodes(G,'s','g')
+            print(visited)
 
+            self.showPath(visited, counter)
+            counter += 1
+            visited.clear()
+        elif self.getAlgoSelection()=="Iterative Deepening":
+            
+            visited.clear()
+        elif self.getAlgoSelection()=="DFS":
+            visited=dfs.dfs_iterate_till_goal(G,'s','g')
+            print(visited)
+
+            self.showPath(visited, counter)
+            counter += 1
+            visited.clear()
         #net.from_nx(G)
         #net.write_html("g.html")
         #self.web.load(QUrl.fromLocalFile(os.path.abspath(os.path.join(os.path.dirname(__file__), "g.html"))))

@@ -1,23 +1,23 @@
 import networkx as nx
-g=nx.Graph()
-g.add_node('s',h=13)
-g.add_node('a',h=12)
-g.add_node('b',h=4)
-g.add_node('c',h=7)
-g.add_node('d',h=3)
-g.add_node('g',h=0)
+# g=nx.Graph()
+# g.add_node('s',h=13)
+# g.add_node('a',h=12)
+# g.add_node('b',h=4)
+# g.add_node('c',h=7)
+# g.add_node('d',h=3)
+# g.add_node('g',h=0)
 
 
 
-g.add_edge('s', 'a',weight=1)
+# g.add_edge('s', 'a',weight=1)
 
-g.add_edge('a', 'b',weight=3)
-g.add_edge('a', 'c',weight=1)
-g.add_edge('b', 'd',weight=3)
-g.add_edge('c', 'd',weight=1)
-g.add_edge('c', 'g',weight=2)
-g.add_edge('d', 'g',weight=3)
-g.add_edge('s', 'g',weight=12)
+# g.add_edge('a', 'b',weight=3)
+# g.add_edge('a', 'c',weight=1)
+# g.add_edge('b', 'd',weight=3)
+# g.add_edge('c', 'd',weight=1)
+# g.add_edge('c', 'g',weight=2)
+# g.add_edge('d', 'g',weight=3)
+# g.add_edge('s', 'g',weight=12)
 
 # g.add_edge(1,5,weight=3)
 
@@ -32,7 +32,7 @@ def path_cost(path):
 def ucs_visited(Graph,s,g):#return list of nodes
     graph1=dict(Graph.adjacency())
     graph={}
-    print(graph1.keys())
+
     key=list(graph1.keys())
     count=0
     for i in graph1.values():
@@ -86,6 +86,6 @@ def UCS(Graph,Start,Goal):
 def ucs_visited_nodes(g,start,Goals):
     lst=list(ucs_visited(g,start,Goals))
 
-    print(lst)
+    return lst
     
-ucs_visited_nodes(g,'s','g')
+
