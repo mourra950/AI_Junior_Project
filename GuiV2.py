@@ -124,7 +124,7 @@ class Ui_MainWindow(object):
         counter = 1
         self.draw()
         self.showPathcost.clear()
-        self.errorbox('Reset done', 'hope you keep enjoying the program😉')
+        self.infobox('Reset done', 'hope you keep enjoying the program😉')
 
     def showPath(self, visited, counter, Mcolor):
         N = Network(height='100%', width='100%', directed=True)
@@ -206,6 +206,12 @@ class Ui_MainWindow(object):
         msg.setWindowTitle(Title)
         msg.exec_()
 
+    def infobox(self,Title,Text):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText(Text)
+        msg.setWindowTitle(Title)
+        msg.exec_()
     # custom funtions
     def GraphType(self):
         global G
@@ -278,7 +284,7 @@ class Ui_MainWindow(object):
         # else:
         #     N = Network(height='100%', width='100%',directed=True)
         for i in nx.nodes(G):
-            N.add_node(i)
+            N.add_node(i,title=str(G.nodes[i]['h']))
         for i in nx.nodes(G):
             for j in nx.neighbors(G, i):
                 N.add_edge(i, j, color='#Fcc201', title=G[i][j]['weight'])
