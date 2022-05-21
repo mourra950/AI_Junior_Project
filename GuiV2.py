@@ -21,6 +21,7 @@ from PyQt5 import QtWebEngineWidgets
 import networkx as nx
 import Algorithms.BFS as bfs
 import Algorithms.DFS as dfs
+import Algorithms.DFSLimited as dfps
 import Algorithms.astarsearch as Astar
 import Algorithms.UniformCost as Ucs
 
@@ -73,6 +74,7 @@ def greedy(g, start, goal):
 
 
 class Ui_MainWindow(object):
+    #show the path 🎉🎈 
     def pathshow(self):
         self.GraphType()
         if self.getAlgoSelection() == "BFS":
@@ -102,8 +104,11 @@ class Ui_MainWindow(object):
             self.showPath(path, len(path), '#FF0000')
             # Add UCS call
         elif self.getAlgoSelection() == "Iterative Deepening":
-            var = 0  # DELETE THIS LINE
-            # Add Iterative Deepening call
+            path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
+            temp = ''.join(path)
+            temp += ' and the cost is: ' + str(cost)
+            self.showPathcost.setText(temp)
+            self.showPath(path, len(path), '#FF0000')
         elif self.getAlgoSelection() == "A*":
             path = nx.astar_path(G, self.getS(), self.getGs()[0], heuristic=None, weight='weight')
             cost = nx.astar_path_length(G, self.getS(),self.getGs()[0], heuristic=None, weight='weight')
@@ -175,7 +180,7 @@ class Ui_MainWindow(object):
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "Iterative Deepening":
-            visited = Ucs.ucs_visited_nodes(G, self.getS(), self.getGs())
+            visited = dfps.dfs_iterate_till_goal(G, self.getS(), self.getGs())
             self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
