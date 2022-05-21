@@ -21,13 +21,14 @@ from PyQt5 import QtWebEngineWidgets
 import networkx as nx
 import Algorithms.BFS as bfs
 import Algorithms.DFS as dfs
+import Algorithms.DFSLimited as dfps
 import Algorithms.astarsearch as Astar
 import Algorithms.UniformCost as Ucs
 
 
 # import Greedy as gr
 Gt = nx.DiGraph()
-G = nx.DiGraph()
+G = nx.Graph()
 counter = 1
 
 
@@ -73,6 +74,7 @@ def greedy(g, start, goal):
 
 
 class Ui_MainWindow(object):
+    #show the path 🎉🎈 
     def pathshow(self):
         self.GraphType()
         if self.getAlgoSelection() == "BFS":
@@ -102,8 +104,11 @@ class Ui_MainWindow(object):
             self.showPath(path, len(path), '#FF0000')
             # Add UCS call
         elif self.getAlgoSelection() == "Iterative Deepening":
-            var = 0  # DELETE THIS LINE
-            # Add Iterative Deepening call
+            path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
+            temp = ''.join(path)
+            temp += ' and the cost is: ' + str(cost)
+            self.showPathcost.setText(temp)
+            self.showPath(path, len(path), '#FF0000')
         elif self.getAlgoSelection() == "A*":
             path = nx.astar_path(G, self.getS(), self.getGs()[0], heuristic=None, weight='weight')
             cost = nx.astar_path_length(G, self.getS(),self.getGs()[0], heuristic=None, weight='weight')
@@ -148,6 +153,7 @@ class Ui_MainWindow(object):
     def loadGraph(self):
         global counter
         self.GraphType()
+        print(type(G))
         if self.getAlgoSelection() == "Greedy":
             visited, path = greedy(G, self.getS(), self.getGs())
             self.showPath(visited, counter, "#FFFF00")
@@ -160,6 +166,7 @@ class Ui_MainWindow(object):
             visited.clear()
         elif self.getAlgoSelection() == "DFS":
             visited = dfs.dfs_iterate_till_goal(G, self.getS(), self.getGs())
+            print(visited)
             self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
@@ -175,7 +182,7 @@ class Ui_MainWindow(object):
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "Iterative Deepening":
-            visited = Ucs.ucs_visited_nodes(G, self.getS(), self.getGs())
+            visited = dfps.dfs_iterate_till_goal(G, self.getS(), self.getGs())
             self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
@@ -546,7 +553,7 @@ class Ui_MainWindow(object):
             "MainWindow", "Goal(insert \',\' between goals)"))
         self.StartAlgo.setText(_translate("MainWindow", "Start"))
         self.Directed.setText(_translate("MainWindow", "Directed"))
-        # self.Directed.clicked.connect(lambda: self.GraphType())
+        self.Directed.clicked.connect(lambda: self.Reset())
         # reset functionality
         self.ResetGraph.setText(_translate("MainWindow", "reset"))
         self.ResetGraph.clicked.connect(lambda: self.Reset())

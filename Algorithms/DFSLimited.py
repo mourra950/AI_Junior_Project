@@ -1,3 +1,4 @@
+from copy import copy
 import networkx as nx
 
 G = nx.Graph()
@@ -7,15 +8,15 @@ G.add_node('a')
 G.add_node('b')
 G.add_node('c')
 G.add_node('d')
-G.add_node('s')
 G.add_node('g')
+
 #creating edges
-G.add_edge('s', 'a', weight=1)
-G.add_edge('s', 'g', weight=12)
-G.add_edge('a', 'b', weight=3)
-G.add_edge('b', 'd', weight=3)
+G.add_edge('a', 'b', weight=1)
 G.add_edge('a', 'c', weight=1)
-G.add_edge('c', 'd', weight=1)
+G.add_edge('a', 'd', weight=1)
+G.add_edge('b', 'g',weight=1)
+
+
 
 # print(nx.number_of_nodes(G))
 
@@ -57,24 +58,29 @@ def dfs_path(MGraph,start,Goal):#we need to make goal list
 
 #function when called return list with visited edges and visited nodes when bfs is used
 def dfs_iterate_till_goal(MGraph,start,Goal):
+        
         temp=[]
         Depthlimit=1
         
-        for i in range(Depthlimit):
+        while True:
             
-            T = nx.dfs_tree(MGraph, source=start,depth_limit=i)
+            T = nx.dfs_tree(MGraph, source=start,depth_limit=Depthlimit)
+            # print(len(T))
+            # print(len(temp))
+            print(Depthlimit)
             if (len(temp)!=len(T)):
-               
                 for i in T:
                     visited.append(i)
+                    if i in temp:
+                        temp.append(i)
                     if(i in Goal):
-                        return visited
+                        return temp
+                
+                
                 visited.clear()
             else :
-                   return visited
+                   return 'not found'
             Depthlimit +=1
 def main():            
-    dfs_iterate_till_goal(G,'s','g')
-    for i in visited:
-        print(i) 
-main()
+    print(dfs_iterate_till_goal(G,'a','s'))
+    
