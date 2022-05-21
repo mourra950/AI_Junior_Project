@@ -27,8 +27,6 @@ def path_cost(path):
     for(node,cost) in path:
         total_cost+=cost
     return total_cost,path[-1][0]
-
-
 def ucs_visited(Graph,s,g):#return list of nodes
     graph1=dict(Graph.adjacency())
     graph={}
@@ -60,18 +58,12 @@ def ucs_visited(Graph,s,g):#return list of nodes
                 new_path=path.copy()
                 new_path.append((node2,cost))
                 queue.append(new_path)
-
-
-
-
 def UCS(Graph,Start,Goal):
     #init to the first goal so we can start comparison
     Cost=0
     solutionPath=nx.shortest_path(Graph, source=Start, target=Goal[0], weight='weight', method='dijkstra')
     for i in range(len(solutionPath)-1):
         Cost+=Graph[solutionPath[i]][solutionPath[i+1]]['weight']
-
-
     #iterate over the whole goals to find the shortest one and return it to draw it on the graph    
     for i in Goal:
         tempsolution=nx.shortest_path(Graph, source=Start, target=i, weight='weight', method='dijkstra')
@@ -80,12 +72,10 @@ def UCS(Graph,Start,Goal):
             temp+=Graph[tempsolution[i]][tempsolution[i+1]]['weight']
         if Cost>temp:
             Cost=temp
-            solutionPath=tempsolution
-            
+            solutionPath=tempsolution       
     return solutionPath,Cost
 def ucs_visited_nodes(g,start,Goals):
     lst=list(ucs_visited(g,start,Goals))
-
     return lst
     
 
