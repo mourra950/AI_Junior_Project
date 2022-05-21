@@ -1,21 +1,21 @@
 import networkx as nx
-G = nx.Graph()
-#creating a test graph using sheet 2 in ai
-#creating nodes
-G.add_node('a')
-G.add_node('b')
-G.add_node('c')
-G.add_node('d')
-G.add_node('s')
-G.add_node('g')
-#creating edges
-G.add_edge('s', 'g', weight=12)
-G.add_edge('s', 'a', weight=1)
+# G = nx.Graph()
+# #creating a test graph using sheet 2 in ai
+# #creating nodes
+# G.add_node('a')
+# G.add_node('b')
+# G.add_node('c')
+# G.add_node('d')
+# G.add_node('s')
+# G.add_node('g')
+# #creating edges
+# G.add_edge('s', 'g', weight=12)
+# G.add_edge('s', 'a', weight=1)
 
-G.add_edge('a', 'b', weight=3)
-G.add_edge('b', 'd', weight=3)
-G.add_edge('a', 'c', weight=1)
-G.add_edge('c', 'd', weight=1)
+# G.add_edge('a', 'b', weight=3)
+# G.add_edge('b', 'd', weight=3)
+# G.add_edge('a', 'c', weight=1)
+# G.add_edge('c', 'd', weight=1)
 # print(nx.number_of_nodes(G))
 
 visited=[]
@@ -43,7 +43,7 @@ def dfspath(graph, start, Goal):
             Stack.append(new_path)
 def dfs_path(MGraph,start,Goal):#we need to make goal list
     cost=0
-    Iterator=nx.bfs_successors(MGraph, source=start)
+    Iterator=nx.dfs_successors(MGraph, source=start)
     adj={}
     for i in Iterator:
         adj[i[0]]=i[1]
