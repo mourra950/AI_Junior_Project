@@ -28,7 +28,7 @@ import Algorithms.UniformCost as Ucs
 
 # import Greedy as gr
 Gt = nx.DiGraph()
-G = nx.DiGraph()
+G = nx.Graph()
 counter = 1
 
 
@@ -153,6 +153,7 @@ class Ui_MainWindow(object):
     def loadGraph(self):
         global counter
         self.GraphType()
+        print(type(G))
         if self.getAlgoSelection() == "Greedy":
             visited, path = greedy(G, self.getS(), self.getGs())
             self.showPath(visited, counter, "#FFFF00")
@@ -165,6 +166,7 @@ class Ui_MainWindow(object):
             visited.clear()
         elif self.getAlgoSelection() == "DFS":
             visited = dfs.dfs_iterate_till_goal(G, self.getS(), self.getGs())
+            print(visited)
             self.showPath(visited, counter, "#FFFF00")
             counter += 1
             visited.clear()
@@ -551,7 +553,7 @@ class Ui_MainWindow(object):
             "MainWindow", "Goal(insert \',\' between goals)"))
         self.StartAlgo.setText(_translate("MainWindow", "Start"))
         self.Directed.setText(_translate("MainWindow", "Directed"))
-        # self.Directed.clicked.connect(lambda: self.GraphType())
+        self.Directed.clicked.connect(lambda: self.Reset())
         # reset functionality
         self.ResetGraph.setText(_translate("MainWindow", "reset"))
         self.ResetGraph.clicked.connect(lambda: self.Reset())
