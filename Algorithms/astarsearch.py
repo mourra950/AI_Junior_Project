@@ -22,9 +22,6 @@ g=nx.Graph()
 # g.add_edge('f', 'g',weight=3)
 
 H_table=nx.get_node_attributes(g,'h')
-
-
-
 def path_f_cost(path):
     g_cost=0
     for(node,cost) in path:
@@ -33,8 +30,6 @@ def path_f_cost(path):
     h_cost=H_table[last_node]
     f_cost=g_cost+h_cost
     return f_cost,last_node
-
-
 def A_visited(Graph,s,g):#return list of nodes
     graph1=dict(Graph.adjacency())
     graph={}
