@@ -63,12 +63,14 @@ def dfs_iterate_till_goal(MGraph,start,Goal):
         while True:
             T = nx.dfs_tree(MGraph, source=start,depth_limit=Depthlimit)
             print(Depthlimit)
+            
             if (len(temp)!=len(T)):
                 for i in T:
                     visited.append(i)
-                    if i in temp:
+                    if i not in temp:
                         temp.append(i)
-                    if(i in Goal):
+                    if i in Goal:
+                        
                         return temp
                 visited.clear()
             else :

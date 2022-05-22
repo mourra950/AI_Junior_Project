@@ -16,6 +16,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox
+from matplotlib.pyplot import title
 from pyvis.network import Network
 from PyQt5 import QtWebEngineWidgets
 import networkx as nx
@@ -46,7 +47,7 @@ def getPath(node):
 
 
 def getH(node):
-    return G.nodes[node]['h']
+    return Gt.nodes[node]['h']
 
 
 def greedy(g, start, goal):
@@ -67,23 +68,23 @@ def greedy(g, start, goal):
                 nx.set_node_attributes(g, {y: x}, name="parent")
 
         fringe.sort(key=getH)
+    
 
 
 class Ui_MainWindow(object):
     def Example(self):
         global Gt
-        print('mama 7elwa')
         Gt=nx.DiGraph()
-        Gt.add_node('A',h=2)
-        Gt.add_node('B',h=1)
-        Gt.add_node('C',h=1)
-        Gt.add_node('D',h=0)
-        Gt.add_node('E',h=0)
-        Gt.add_node('F',h=0)
-        Gt.add_node('G',h=0)
-        Gt.add_node('H',h=0)
-        Gt.add_node('J',h=0)
-        Gt.add_node('K',h=0)
+        Gt.add_node('A',h=2,parent=None)
+        Gt.add_node('B',h=1,parent=None)
+        Gt.add_node('C',h=1,parent=None)
+        Gt.add_node('D',h=0,parent=None)
+        Gt.add_node('E',h=0,parent=None)
+        Gt.add_node('F',h=0,parent=None)
+        Gt.add_node('G',h=0,parent=None)
+        Gt.add_node('H',h=0,parent=None)
+        Gt.add_node('J',h=0,parent=None)
+        Gt.add_node('K',h=0,parent=None)
         #creating edges
         Gt.add_edge('A', 'B', weight=2)
         Gt.add_edge('A', 'C', weight=1)
@@ -103,33 +104,33 @@ class Ui_MainWindow(object):
         try:
             if self.getAlgoSelection() == "BFS":
                 path, cost = bfs.bfs_path(G, self.getS(), self.getGs())
-                temp = ''.join(path)
+                temp = '->'.join(path)
                 temp += ' and the cost is: ' + str(cost)
                 self.showPathcost.setText(temp)
                 self.showPath(path, len(path), color)
             elif self.getAlgoSelection() == "Greedy":
                 x, pathandcost = greedy(G, self.getS(), self.getGs())
                 path, cost = pathandcost
-                temp = ''.join(path)
+                temp = '->'.join(path)
                 temp += ' and the cost is: ' + str(cost)
                 self.showPathcost.setText(temp)
                 self.showPath(path, len(path), color)
             elif self.getAlgoSelection() == "DFS":
                 path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
-                temp = ''.join(path)
+                temp = '->'.join(path)
                 temp += ' and the cost is: ' + str(cost)
                 self.showPathcost.setText(temp)
                 self.showPath(path, len(path), color)
             elif self.getAlgoSelection() == "Uniform Cost":
                 path, cost = Ucs.UCS(G, self.getS(), self.getGs())
-                temp = ''.join(path)
+                temp = '->'.join(path)
                 temp += ' and the cost is: ' + str(cost)
                 self.showPathcost.setText(temp)
                 self.showPath(path, len(path), color)
                 # Add UCS call
             elif self.getAlgoSelection() == "Iterative Deepening":
                 path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
-                temp = ''.join(path)
+                temp = '->'.join(path)
                 temp += ' and the cost is: ' + str(cost)
                 self.showPathcost.setText(temp)
                 self.showPath(path, len(path), color)
@@ -142,7 +143,7 @@ class Ui_MainWindow(object):
                     if cost>tempcost:
                         cost=tempcost
                         path=temppath
-                temp = ''.join(path)
+                temp = '->'.join(path)
                 temp += ' and the cost is: ' + str(cost)
                 self.showPathcost.setText(temp)
                 self.showPath(path, len(path), color)
@@ -162,23 +163,23 @@ class Ui_MainWindow(object):
         count = 0
         for i in visited:
             if counter > count:
-                N.add_node(i, color=Mcolor)
+                N.add_node(i, color=Mcolor,title=str(G.nodes[i]['h']))
                 count += 1
             else:
-                N.add_node(i)
+                N.add_node(i,title=str(G.nodes[i]['h']))
         for i in nx.nodes(G):
             if i not in visited:
-                N.add_node(i)
+                N.add_node(i,title=str(G.nodes[i]['h']))
         for i in nx.nodes(G):
             for j in nx.neighbors(G, i):
-                N.add_edge(i, j, color='#Fcc201')
+                N.add_edge(i, j, color='#Fcc201',title=str(G[i][j]['weight']))
         N.write_html('Graph.html')
         self.web.load(QUrl.fromLocalFile(os.path.abspath(
             os.path.join(os.path.dirname(__file__), "Graph.html"))))
 
     def loadGraph(self):
         global counter
-        color='#FFFF00'
+        color='#DDA0DD'
         self.GraphType()
         try:
             if self.getAlgoSelection() == "Greedy":
@@ -187,6 +188,7 @@ class Ui_MainWindow(object):
                 counter += 1
                 visited.clear()
             elif self.getAlgoSelection() == "BFS":
+   
                 visited = bfs.bfs_iterate_till_goal(G, self.getS(), self.getGs())
                 self.showPath(visited, counter, color)
                 counter += 1
@@ -214,7 +216,7 @@ class Ui_MainWindow(object):
                 counter += 1
                 visited.clear()
         except:
-            pass
+            print('error ya ebn el kalb')
         # Iterative Deepening
 
 
@@ -286,9 +288,8 @@ class Ui_MainWindow(object):
         else:
             if (self.getHe().isdigit()):
 
-                Gt.add_node(self.getNodeName(), h=int(
-                    self.getHe()), parent=None)
-                print(G.nodes)
+                Gt.add_node(self.getNodeName(), h=int(self.getHe()), parent=None)
+                print(G.nodes,'ana hena')
                 self.draw()
                 self.HeuristicNode.clear()
                 self.InsertedNode.clear()
@@ -329,6 +330,7 @@ class Ui_MainWindow(object):
     def draw(self):
         self.GraphType()
         # if(self.Directed.isChecked()):
+        
         N = Network(height='100%', width='100%', directed=True)
         # else:
         #     N = Network(height='100%', width='100%',directed=True)
