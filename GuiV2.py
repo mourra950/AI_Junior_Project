@@ -52,77 +52,92 @@ def getH(node):
 def greedy(g, start, goal):
     fringe = []
     visited = []
-    if not (start in g.nodes):
-        print("not in the graph")
-        return
-    else:
-        fringe.append(start)
+    fringe.append(start)
+    x = fringe[0]
+    while not (len(fringe) == 0):
         x = fringe[0]
-        while not (len(fringe) == 0):
-            x = fringe[0]
-            visited.append(x)
-            fringe.pop(0)
-            if x in goal:
-                print("Goal is " + str(x), sep=" ")
-                return visited, getPath(x)
-            for y in nx.all_neighbors(g, x):
-                if not (y in visited):
-                    fringe.append(y)
-                    nx.set_node_attributes(g, {y: x}, name="parent")
+        visited.append(x)
+        fringe.pop(0)
+        if x in goal:
+            # print("Goal is " + str(x), sep=" ")
+            return visited, getPath(x)
+        for y in nx.all_neighbors(g, x):
+            if not (y in visited):
+                fringe.append(y)
+                nx.set_node_attributes(g, {y: x}, name="parent")
 
-            fringe.sort(key=getH)
+        fringe.sort(key=getH)
 
 
 class Ui_MainWindow(object):
+    def Example(self):
+        # G.add_node('a')
+        # G.add_node('b')
+        # G.add_node('c')
+        # G.add_node('d')
+        # G.add_node('s')
+        # G.add_node('g')
+        # G.add_node('gs')
+
+        # #creating edges
+        # G.add_edge('s', 'a', weight=1)
+        # G.add_edge('a', 'b', weight=3)
+        # G.add_edge('b', 'd', weight=3)
+        # G.add_edge('a', 'c', weight=1)
+        # G.add_edge('c', 'd', weight=1)
+        
     #show the path 🎉🎈 
     def pathshow(self):
+        color='#FF0000'
         self.GraphType()
-        if self.getAlgoSelection() == "BFS":
-            path, cost = bfs.bfs_path(G, self.getS(), self.getGs())
-            temp = ''.join(path)
-            temp += ' and the cost is: ' + str(cost)
-            self.showPathcost.setText(temp)
-            self.showPath(path, len(path), '#FF0000')
-        elif self.getAlgoSelection() == "Greedy":
-            x, pathandcost = greedy(G, self.getS(), self.getGs())
-            path, cost = pathandcost
-            temp = ''.join(path)
-            temp += ' and the cost is: ' + str(cost)
-            self.showPathcost.setText(temp)
-            self.showPath(path, len(path), '#FF0000')
-        elif self.getAlgoSelection() == "DFS":
-            path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
-            temp = ''.join(path)
-            temp += ' and the cost is: ' + str(cost)
-            self.showPathcost.setText(temp)
-            self.showPath(path, len(path), '#FF0000')
-        elif self.getAlgoSelection() == "Uniform Cost":
-            path, cost = Ucs.UCS(G, self.getS(), self.getGs())
-            temp = ''.join(path)
-            temp += ' and the cost is: ' + str(cost)
-            self.showPathcost.setText(temp)
-            self.showPath(path, len(path), '#FF0000')
-            # Add UCS call
-        elif self.getAlgoSelection() == "Iterative Deepening":
-            path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
-            temp = ''.join(path)
-            temp += ' and the cost is: ' + str(cost)
-            self.showPathcost.setText(temp)
-            self.showPath(path, len(path), '#FF0000')
-        elif self.getAlgoSelection() == "A*":
-            path = nx.astar_path(G, self.getS(), self.getGs()[0], heuristic=None, weight='weight')
-            cost = nx.astar_path_length(G, self.getS(),self.getGs()[0], heuristic=None, weight='weight')
-            for i in self.getGs():
-                temppath = nx.astar_path(G, self.getS(), i, heuristic=None, weight='weight')
-                tempcost = nx.astar_path_length(G, self.getS(),i, heuristic=None, weight='weight')
-                if cost>tempcost:
-                    cost=tempcost
-                    path=temppath
-            temp = ''.join(path)
-            temp += ' and the cost is: ' + str(cost)
-            self.showPathcost.setText(temp)
-            self.showPath(path, len(path), '#FF0000')
-
+        try:
+            if self.getAlgoSelection() == "BFS":
+                path, cost = bfs.bfs_path(G, self.getS(), self.getGs())
+                temp = ''.join(path)
+                temp += ' and the cost is: ' + str(cost)
+                self.showPathcost.setText(temp)
+                self.showPath(path, len(path), color)
+            elif self.getAlgoSelection() == "Greedy":
+                x, pathandcost = greedy(G, self.getS(), self.getGs())
+                path, cost = pathandcost
+                temp = ''.join(path)
+                temp += ' and the cost is: ' + str(cost)
+                self.showPathcost.setText(temp)
+                self.showPath(path, len(path), color)
+            elif self.getAlgoSelection() == "DFS":
+                path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
+                temp = ''.join(path)
+                temp += ' and the cost is: ' + str(cost)
+                self.showPathcost.setText(temp)
+                self.showPath(path, len(path), color)
+            elif self.getAlgoSelection() == "Uniform Cost":
+                path, cost = Ucs.UCS(G, self.getS(), self.getGs())
+                temp = ''.join(path)
+                temp += ' and the cost is: ' + str(cost)
+                self.showPathcost.setText(temp)
+                self.showPath(path, len(path), color)
+                # Add UCS call
+            elif self.getAlgoSelection() == "Iterative Deepening":
+                path, cost = dfs.dfs_path(G, self.getS(), self.getGs())
+                temp = ''.join(path)
+                temp += ' and the cost is: ' + str(cost)
+                self.showPathcost.setText(temp)
+                self.showPath(path, len(path), color)
+            elif self.getAlgoSelection() == "A*":
+                path = nx.astar_path(G, self.getS(), self.getGs()[0], heuristic=None, weight='weight')
+                cost = nx.astar_path_length(G, self.getS(),self.getGs()[0], heuristic=None, weight='weight')
+                for i in self.getGs():
+                    temppath = nx.astar_path(G, self.getS(), i, heuristic=None, weight='weight')
+                    tempcost = nx.astar_path_length(G, self.getS(),i, heuristic=None, weight='weight')
+                    if cost>tempcost:
+                        cost=tempcost
+                        path=temppath
+                temp = ''.join(path)
+                temp += ' and the cost is: ' + str(cost)
+                self.showPathcost.setText(temp)
+                self.showPath(path, len(path), color)
+        except:
+            pass
 
     def Reset(self):
         global counter
@@ -152,40 +167,43 @@ class Ui_MainWindow(object):
 
     def loadGraph(self):
         global counter
+        color='#FFFF00'
         self.GraphType()
-        print(type(G))
-        if self.getAlgoSelection() == "Greedy":
-            visited, path = greedy(G, self.getS(), self.getGs())
-            self.showPath(visited, counter, "#FFFF00")
-            counter += 1
-            visited.clear()
-        elif self.getAlgoSelection() == "BFS":
-            visited = bfs.bfs_iterate_till_goal(G, self.getS(), self.getGs())
-            self.showPath(visited, counter, "#FFFF00")
-            counter += 1
-            visited.clear()
-        elif self.getAlgoSelection() == "DFS":
-            visited = dfs.dfs_iterate_till_goal(G, self.getS(), self.getGs())
-            print(visited)
-            self.showPath(visited, counter, "#FFFF00")
-            counter += 1
-            visited.clear()
-        elif self.getAlgoSelection() == "A*":
-            visited = Astar.A_visited_nodes(G, self.getS(), self.getGs())
-            self.showPath(visited, counter, "#FFFF00")
-            counter += 1
-            visited.clear()
-        elif self.getAlgoSelection() == "Uniform Cost":
-            visited = Ucs.ucs_visited_nodes(G, self.getS(), self.getGs())
-            
-            self.showPath(visited, counter, "#FFFF00")
-            counter += 1
-            visited.clear()
-        elif self.getAlgoSelection() == "Iterative Deepening":
-            visited = dfps.dfs_iterate_till_goal(G, self.getS(), self.getGs())
-            self.showPath(visited, counter, "#FFFF00")
-            counter += 1
-            visited.clear()
+        try:
+            if self.getAlgoSelection() == "Greedy":
+                visited, path = greedy(G, self.getS(), self.getGs())
+                self.showPath(visited, counter, color)
+                counter += 1
+                visited.clear()
+            elif self.getAlgoSelection() == "BFS":
+                visited = bfs.bfs_iterate_till_goal(G, self.getS(), self.getGs())
+                self.showPath(visited, counter, color)
+                counter += 1
+                visited.clear()
+            elif self.getAlgoSelection() == "DFS":
+                visited = dfs.dfs_iterate_till_goal(G, self.getS(), self.getGs())
+                print(visited)
+                self.showPath(visited, counter, color)
+                counter += 1
+                visited.clear()
+            elif self.getAlgoSelection() == "A*":
+                visited = Astar.A_visited_nodes(G, self.getS(), self.getGs())
+                self.showPath(visited, counter, color)
+                counter += 1
+                visited.clear()
+            elif self.getAlgoSelection() == "Uniform Cost":
+                visited = Ucs.ucs_visited_nodes(G, self.getS(), self.getGs())
+                
+                self.showPath(visited, counter, color)
+                counter += 1
+                visited.clear()
+            elif self.getAlgoSelection() == "Iterative Deepening":
+                visited = dfps.dfs_iterate_till_goal(G, self.getS(), self.getGs())
+                self.showPath(visited, counter, color)
+                counter += 1
+                visited.clear()
+        except:
+            pass
         # Iterative Deepening
 
 
@@ -197,9 +215,10 @@ class Ui_MainWindow(object):
 
                 return self.StartNode.text()
             else:
-                self.errorbox('error', 'start is not found')
+                self.errorbox('start error', 'start is not found')
         else:
-            self.errorbox('error', 'cant be empty')
+            self.errorbox('start error', 'start cant be empty')
+        
 
     def getGs(self):
         temp=list(self.Goals.text().split(','))
@@ -261,9 +280,16 @@ class Ui_MainWindow(object):
                 self.errorbox('Heuristic error', 'H must be integer')
 
     def insertEdge(self):
-        if self.getFromNode() == "" or self.getFromNode() not in nx.nodes(
-                Gt) or self.getToNode() == "" or self.getToNode() not in nx.nodes(Gt):
-            self.errorbox('error', 'Enter Valid Nodes')
+        if self.getFromNode() == "":
+            self.errorbox("Node 1 Error","Please insert node 1")
+        elif self.getToNode()=="":
+            self.errorbox("Node 2 Error","Please insert node 2")
+        elif not self.getFromNode() in nx.nodes(G):
+            self.errorbox("Node 1 Error","Node 1 is not found")
+        elif not self.getToNode() in nx.nodes(G):
+            self.errorbox("Node 2 Error","Node 2 is not found") 
+        elif self.getWe()=="":
+            self.errorbox("Weight Error","Please insert weight")
         else:
             if (self.getWe().isdigit()):
                 Gt.add_edge(self.getFromNode(), self.getToNode(),
@@ -303,9 +329,14 @@ class Ui_MainWindow(object):
         return self.comboBox.currentText()
 
     def deleteEdge(self):
-        if self.getFromNode() == "" or self.getFromNode() not in nx.nodes(
-                Gt) or self.getToNode() == "" or self.getToNode() not in nx.nodes(Gt):
-            self.errorbox('error', 'Enter Valid node')
+        if self.getFromNode() == "":
+            self.errorbox("Node 1 Error","Please insert node 1")
+        elif self.getToNode()=="":
+            self.errorbox("Node 2 Error","Please insert node 2")
+        elif not self.getFromNode() in nx.nodes(G):
+            self.errorbox("Node 1 Error","Node 1 is not found")
+        elif not self.getToNode() in nx.nodes(G):
+            self.errorbox("Node 2 Error","Node 2 is not found") 
         elif not Gt.has_edge(self.getFromNode(), self.getToNode()):
             self.errorbox('error', 'Enter Valid edge')
         else:
@@ -551,7 +582,8 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Start Node"))
         self.label_8.setText(_translate(
             "MainWindow", "Goal(insert \',\' between goals)"))
-        self.StartAlgo.setText(_translate("MainWindow", "Start"))
+        self.StartAlgo.setText(_translate("MainWindow", "Example"))
+        self.StartAlgo.clicked.connect(lambda: self.Example())
         self.Directed.setText(_translate("MainWindow", "Directed"))
         self.Directed.clicked.connect(lambda: self.Reset())
         # reset functionality
