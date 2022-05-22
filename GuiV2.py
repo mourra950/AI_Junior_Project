@@ -71,6 +71,7 @@ def greedy(g, start, goal):
 
 class Ui_MainWindow(object):
     def Example(self):
+        print("x")
         # G.add_node('a')
         # G.add_node('b')
         # G.add_node('c')
