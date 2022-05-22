@@ -58,15 +58,10 @@ def dfs_path(MGraph,start,Goal):#we need to make goal list
 
 #function when called return list with visited edges and visited nodes when bfs is used
 def dfs_iterate_till_goal(MGraph,start,Goal):
-        
         temp=[]
         Depthlimit=1
-        
         while True:
-            
             T = nx.dfs_tree(MGraph, source=start,depth_limit=Depthlimit)
-            # print(len(T))
-            # print(len(temp))
             print(Depthlimit)
             if (len(temp)!=len(T)):
                 for i in T:
@@ -75,8 +70,6 @@ def dfs_iterate_till_goal(MGraph,start,Goal):
                         temp.append(i)
                     if(i in Goal):
                         return temp
-                
-                
                 visited.clear()
             else :
                    return 'not found'

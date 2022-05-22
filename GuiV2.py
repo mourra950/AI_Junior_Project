@@ -156,34 +156,34 @@ class Ui_MainWindow(object):
         print(type(G))
         if self.getAlgoSelection() == "Greedy":
             visited, path = greedy(G, self.getS(), self.getGs())
-            self.showPath(visited, counter, "#FFFF00")
+            self.showPath(visited, counter, "#DDA0DD")
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "BFS":
             visited = bfs.bfs_iterate_till_goal(G, self.getS(), self.getGs())
-            self.showPath(visited, counter, "#FFFF00")
+            self.showPath(visited, counter, "#DDA0DD")
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "DFS":
             visited = dfs.dfs_iterate_till_goal(G, self.getS(), self.getGs())
             print(visited)
-            self.showPath(visited, counter, "#FFFF00")
+            self.showPath(visited, counter, "#DDA0DD")
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "A*":
             visited = Astar.A_visited_nodes(G, self.getS(), self.getGs())
-            self.showPath(visited, counter, "#FFFF00")
+            self.showPath(visited, counter, "#DDA0DD")
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "Uniform Cost":
             visited = Ucs.ucs_visited_nodes(G, self.getS(), self.getGs())
             
-            self.showPath(visited, counter, "#FFFF00")
+            self.showPath(visited, counter, "#DDA0DD")
             counter += 1
             visited.clear()
         elif self.getAlgoSelection() == "Iterative Deepening":
             visited = dfps.dfs_iterate_till_goal(G, self.getS(), self.getGs())
-            self.showPath(visited, counter, "#FFFF00")
+            self.showPath(visited, counter, "#DDA0DD")
             counter += 1
             visited.clear()
         # Iterative Deepening
