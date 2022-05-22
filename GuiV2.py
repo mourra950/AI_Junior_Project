@@ -178,7 +178,7 @@ class Ui_MainWindow(object):
 
     def loadGraph(self):
         global counter
-        color='#FFFF00'
+        color='#DDA0DD'
         self.GraphType()
         try:
             if self.getAlgoSelection() == "Greedy":
