@@ -71,21 +71,30 @@ def greedy(g, start, goal):
 
 class Ui_MainWindow(object):
     def Example(self):
-        print("x")
-        # G.add_node('a')
-        # G.add_node('b')
-        # G.add_node('c')
-        # G.add_node('d')
-        # G.add_node('s')
-        # G.add_node('g')
-        # G.add_node('gs')
-
-        # #creating edges
-        # G.add_edge('s', 'a', weight=1)
-        # G.add_edge('a', 'b', weight=3)
-        # G.add_edge('b', 'd', weight=3)
-        # G.add_edge('a', 'c', weight=1)
-        # G.add_edge('c', 'd', weight=1)
+        global Gt
+        print('mama 7elwa')
+        Gt=nx.DiGraph()
+        Gt.add_node('A',h=2)
+        Gt.add_node('B',h=1)
+        Gt.add_node('C',h=1)
+        Gt.add_node('D',h=0)
+        Gt.add_node('E',h=0)
+        Gt.add_node('F',h=0)
+        Gt.add_node('G',h=0)
+        Gt.add_node('H',h=0)
+        Gt.add_node('J',h=0)
+        Gt.add_node('K',h=0)
+        #creating edges
+        Gt.add_edge('A', 'B', weight=2)
+        Gt.add_edge('A', 'C', weight=1)
+        Gt.add_edge('A', 'D', weight=3)
+        Gt.add_edge('B', 'E', weight=2)
+        Gt.add_edge('B', 'F', weight=1)
+        Gt.add_edge('C', 'G', weight=1)
+        Gt.add_edge('C', 'H', weight=3)
+        Gt.add_edge('D', 'J', weight=1)
+        Gt.add_edge('D', 'K', weight=1)
+        self.draw()
         
     #show the path 🎉🎈 
     def pathshow(self):
