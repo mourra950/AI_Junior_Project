@@ -138,6 +138,7 @@ class Ui_MainWindow(object):
                 self.showPathcost.setText(temp)
                 self.showPath(path, len(path), color)
         except:
+            self.showPathcost.setText("No path available")
             pass
 
     def Reset(self):
@@ -222,6 +223,8 @@ class Ui_MainWindow(object):
         
 
     def getGs(self):
+        if self.Goals.text()=="":
+            self.errorbox('goal error', 'goal cant be empty')
         temp=list(self.Goals.text().split(','))
         
         return temp
@@ -265,9 +268,12 @@ class Ui_MainWindow(object):
 
     def insertNode(self):
         if self.getNodeName() == "":
-            self.errorbox('Node error', 'N can not be null')
+            self.errorbox('Node error', 'Node name can not be null')
         elif self.getNodeName() in nx.nodes(Gt):
-            self.errorbox('Exists already', 'Node exists')
+            self.errorbox('Node Error', 'Node already exists')
+        elif self.getHe()=="":
+            self.errorbox('Heuristic Error', 'H can not be null')
+                
         else:
             if (self.getHe().isdigit()):
 
@@ -339,7 +345,7 @@ class Ui_MainWindow(object):
         elif not self.getToNode() in nx.nodes(G):
             self.errorbox("Node 2 Error","Node 2 is not found") 
         elif not Gt.has_edge(self.getFromNode(), self.getToNode()):
-            self.errorbox('error', 'Enter Valid edge')
+            self.errorbox('Edge Error', 'Edge is not found')
         else:
             Gt.remove_edge(self.getFromNode(), self.getToNode())
             self.draw()
